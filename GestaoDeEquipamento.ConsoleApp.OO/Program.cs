@@ -6,7 +6,7 @@ namespace GestaoDeEquipamento.ConsoleApp.OO
     {
         static void Main(string[] args)
         {
-            int contador = 0;
+            Controladora controladora = new Controladora(0);
             while (true)
             {
                 MostrarMenuPrincipal();
@@ -14,7 +14,7 @@ namespace GestaoDeEquipamento.ConsoleApp.OO
                 Console.Clear();
                 ValidaOpcaoMenuPrincipal(opcao);
 
-                if (opcao == "1")
+                if (EhOpcao("1",opcao))
                 {
                     while (true)
                     {
@@ -23,41 +23,12 @@ namespace GestaoDeEquipamento.ConsoleApp.OO
                         MostrarMenuOpcoes();
                         opcao = Console.ReadLine().ToUpper();
 
-                        Equipamento equipamento = new Equipamento(contador);
-
                         switch (opcao)
                         {
-                            case "1": equipamento.AdicionaEquipamento(); break;
-                            case "2": equipamento.VisualizaEquipamento(); break;
-                            case "3": equipamento.EditaEquipamento(); break;
-                            case "4": equipamento.ExcluiEquipamento(); break;
-                            case "S": Environment.Exit(0); break;
-                            default:
-                                Console.Clear();
-                                MensagemEmVermelho("Opção inválida, tente novamente!!");
-                                Console.ReadLine();
-                                continue;
-                        }
-                        break;
-                    }
-                }
-                else if (opcao == "2")
-                {
-                    while (true)
-                    {
-                        Console.Clear();
-
-                        MostrarMenuOpcoes();
-                        opcao = Console.ReadLine().ToUpper();
-
-                        Chamado chamado = new Chamado(contador);
-
-                        switch (opcao)
-                        {
-                            case "1": chamado.AdicionaChamado(); break;
-                            case "2": chamado.VisualizaChamado(); break;
-                            case "3": chamado.EditaChamado(); break;
-                            case "4": chamado.ExcluiChamado(); break;
+                            case "1": controladora.AdicionaEquipamento(); break;
+                            case "2": controladora.VisualizaEquipamento(); break;
+                            case "3": controladora.EditaEquipamento(); break;
+                            case "4": controladora.ExcluiEquipamento(); break;
                             case "S": Environment.Exit(0); break;
                             default:
                                 Console.Clear();
@@ -69,8 +40,36 @@ namespace GestaoDeEquipamento.ConsoleApp.OO
                     }
                 }
 
-                
+                else if (EhOpcao("2", opcao))
+                {
+                    while (true)
+                    {
+                        Console.Clear();
+
+                        MostrarMenuOpcoes();
+                        opcao = Console.ReadLine().ToUpper();
+
+                        switch (opcao)
+                        {
+                            case "1": controladora.AdicionaChamado(); break;
+                            case "2": controladora.VisualizaChamado(); break;
+                            case "3": controladora.EditaChamado(); break;
+                            case "4": controladora.ExcluiChamado(); break;
+                            case "S": Environment.Exit(0); break;
+                            default:
+                                Console.Clear();
+                                MensagemEmVermelho("Opção inválida, tente novamente!!");
+                                Console.ReadLine();
+                                continue;
+                        }
+                        break;
+                    }
+                }
             }
+        }
+        private static bool EhOpcao(string num, string opcao)
+        {
+            return opcao == num;
         }
 
         private static void ValidaOpcaoMenuPrincipal(string opcao)
@@ -104,6 +103,5 @@ namespace GestaoDeEquipamento.ConsoleApp.OO
             Console.WriteLine(msg);
             Console.ResetColor();
         }
-
     }
 }
